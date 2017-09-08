@@ -1,3 +1,6 @@
+# depricated code
+# view simple_ind_correlatefield.py
+#
 import subprocess
 
 class CorrelatefieldDescriptor( KnmiWebProcessDescriptor ):

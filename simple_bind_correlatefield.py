@@ -9,7 +9,10 @@ from pprint import pprint
 
 ###
 # input
-with open('inputs.json', 'r') as fp:
+inputfile = 'inputs.json' #opendap
+inputfile = 'inputs_local.json'
+
+with open(inputfile, 'r') as fp:
   inputs = json.load(fp)
 
 
@@ -25,9 +28,10 @@ sourceB = inputs["netcdf_source2"]["default"]
 freq    = inputs["frequency"]["default"]
 ratio   = inputs["ratio"]["default"]
 ave     = inputs["average"]["default"]
+var     = '3'
 target 	= inputs["netcdf_target"]["default"] 
 
-script = './Fortran/ce/correlatefield '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' 3 '+str(target)
+script = './Fortran/ce/correlatefield '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' '+var+' '+str(target)
 
 print script
 
@@ -44,14 +48,15 @@ except Exception, e:
 
 #callback(24,info="errs: "+errs)
 
-#process.wait()
+process.wait()
 
 #  /usr/people/mihajlov/climexp/
 
 ####
 # metadata
 # #
-# ncout = xarray.Dataset(target,'a')
+ncout = xarray.load
+ncout = xarray.Dataset(target,'a')
 
 # ''' metadata appended, inspire worthy '''
 # ncout.setncattr(  "title"        , "KNMI Climate Explorer correlate field service output" )
