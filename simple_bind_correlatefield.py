@@ -27,7 +27,7 @@ ratio   = inputs["ratio"]["default"]
 ave     = inputs["average"]["default"]
 target 	= inputs["netcdf_target"]["default"] 
 
-script = './correlatefield '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' 3 '+str(target)
+script = './Fortran/ce/correlatefield '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' 3 '+str(target)
 
 print script
 
