@@ -48,7 +48,7 @@ except Exception, e:
 
 #callback(24,info="errs: "+errs)
 
-process.wait()
+#process.wait()
 
 #  /usr/people/mihajlov/climexp/
 
