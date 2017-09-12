@@ -1,6 +1,8 @@
 FROM ubuntu
 
+
 MAINTAINER KNMI <info@knmi.nl>
+
 
 RUN apt-get update && apt-get install -y gfortran \
 						 					git \
@@ -43,11 +45,18 @@ WORKDIR /home/Fortran
 COPY ./Fortran/annual2shorter.f .
 COPY ./Fortran/patternfield.F .
 
-ENV PVM_ARCH /home/Fortran/ce
+#RUN mkdir nrf
+#RUN cd nrf
+#RUN wget nrf.tar????
+#RUN tar -xf nrf.tar 
+#RUN make -f nrf.mk 
+#RUN mv libnr.a 
+
+ENV PVM_ARCH /home/Fortran/bin
 RUN mkdir -p ${PVM_ARCH}
 
-RUN cp /home/ClimExp-pyapi/Makefile .
-RUN cp /home/ClimExp-pyapi/Makefile.common ../Makefile.common
+RUN cp /home/ClimExp-pyapi/Makefile.docker ${PVM_ARCH}/Makefile
+RUN cp /home/ClimExp-pyapi/Makefile.common .
 
 
 # run nc-config --all and compare to Makefile
