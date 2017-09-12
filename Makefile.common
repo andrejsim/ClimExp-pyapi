@@ -733,7 +733,7 @@ roc:		roc.o $(LIBRARY)
 
 rocmap:		rocmap.o $(LIBRARY)
 		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)
-
+:q
 ROCscoremap:	ROCscoremap.o
 		$(CC) $(CFLAGS) -o $@ $@.o -L/sw/lib -L/usr/local/free/lib -lnetcdf
 

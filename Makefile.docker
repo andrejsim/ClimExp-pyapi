@@ -7,40 +7,42 @@
 
 # this nc-configuration is from Fidora/KNMI
 ###$ nc-config --all
-  # --cc        -> gcc
-  # --cflags    -> -I/usr/include -I/usr/include/hdf
-  # --libs      -> -L/usr/lib64 -lnetcdf
+# --cc        -> gcc
+# --cflags    -> -I/usr/include -I/usr/include/hdf
+# --libs      -> -L/usr/lib64 -lnetcdf
 
-  # --has-c++   -> no
-  # --cxx       -> 
+# --has-c++   -> no
+# --cxx       -> 
 
-  # --has-c++4  -> no
-  # --cxx4      -> 
+# --has-c++4  -> no
+# --cxx4      -> 
 
-  # --has-fortran-> yes
-  # --fc        -> gfortran
-  # --fflags    -> -I/usr/include
-  # --flibs     -> -lnetcdff
-  # --has-f90   -> no
-  # --has-f03   -> yes
+# --has-fortran-> yes
+# --fc        -> gfortran
+# --fflags    -> -I/usr/include
+# --flibs     -> -lnetcdff
+# --has-f90   -> no
+# --has-f03   -> yes
 
-  # --has-dap   -> yes
-  # --has-nc2   -> yes
-  # --has-nc4   -> yes
-  # --has-hdf5  -> yes
-  # --has-hdf4  -> yes
-  # --has-logging-> no
-  # --has-pnetcdf-> no
-  # --has-szlib -> 
+# --has-dap   -> yes
+# --has-nc2   -> yes
+# --has-nc4   -> yes
+# --has-hdf5  -> yes
+# --has-hdf4  -> yes
+# --has-logging-> no
+# --has-pnetcdf-> no
+# --has-szlib -> 
 
-  # --prefix    -> /usr
-  # --includedir-> /usr/include
-  # --libdir    -> /usr/lib64
-  # --version   -> netCDF 4.4.1.1
+# --prefix    -> /usr
+# --includedir-> /usr/include
+# --libdir    -> /usr/lib64
+# --version   -> netCDF 4.4.1.1
 
 #
 #change I include...
-FFLAGS = -O -Dlinux -fbackslash -ffpe-trap=invalid,zero,overflow -I/usr/include -I/usr/include/hdf5/serial
+#FFLAGS = -O -Dlinux -fbackslash -ffpe-trap=invalid,zero,overflow -I/usr/include
+FFLAGS = -O -Dlinux -fbackslash -ffpe-trap=invalid,zero,overflow -I/usr/include
+
 EOFFLAGS = $(FFLAGS)
 
 CFLAGS = -O2
@@ -49,7 +51,8 @@ CFLAGS = -O2
 #SYSLIBS = -L/usr/lib -L/usr/lib64/ -lnetcdff -lnetcdf -lhdf5 -llapack -lblas
 
 # docker version
-SYSLIBS=-L/usr/lib -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lnetcdff -lnetcdf -llapack -lblas -lhdf5_hl -lhdf5 -lpthread -lsz -lz -ldl -lm -lcurl
+#SYSLIBS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lnetcdff -lnetcdf -llapack -lblas -lhdf5_hl -lhdf5 -lpthread -lsz -lz -ldl -lm -lcurl
+SYSLIBS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu/hdf5/serial -lnetcdff -lnetcdf -lhdf5 -llapack -lblas
 
 FC = gfortran
 LD = gfortran

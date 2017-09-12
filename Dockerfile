@@ -40,24 +40,29 @@ WORKDIR /home/
 RUN git clone https://github.com/andrejsim/ClimExp-pyapi.git
 RUN git clone http://climexp.knmi.nl/Fortran.git 
 
+RUN mkdir -p /nrf
+RUN cd nrf
+#RUN wget nrf.tar????
+COPY nrf/nrf.tar .
+
+
+#RUN tar -xf nrf.tar 
+#RUN make -f nrf.mk 
+#RUN mv libnr.a
+
 WORKDIR /home/Fortran
 # missing files add to git.
 COPY ./Fortran/annual2shorter.f .
 COPY ./Fortran/patternfield.F .
 
-#RUN mkdir nrf
-#RUN cd nrf
-#RUN wget nrf.tar????
-#RUN tar -xf nrf.tar 
-#RUN make -f nrf.mk 
-#RUN mv libnr.a 
+ 
 
-ENV PVM_ARCH /home/Fortran/bin
+ENV PVM_ARCH build
 RUN mkdir -p ${PVM_ARCH}
 
 RUN cp /home/ClimExp-pyapi/Makefile.docker ${PVM_ARCH}/Makefile
-RUN cp /home/ClimExp-pyapi/Makefile.common .
-
+#RUN cp /home/ClimExp-pyapi/Makefile.common .
+COPY ./Fortran/Makefile.common .
 
 # run nc-config --all and compare to Makefile
 

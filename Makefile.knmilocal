@@ -1,5 +1,5 @@
 # based on fortran code download from git clone http://climexp.knmi.nl/Fortran.git
-# export $SVM ???? was this not necessary?
+# SVM_ARCH=ce 
 
 # makefile requires a local directory to build to
 # mkdir Fortran/ce
