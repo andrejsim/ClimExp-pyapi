@@ -19,6 +19,8 @@ RUN apt-get install -y 	build-essential \
 					 	  					netcdf-bin \
 					 	  					netcdf-doc \
 					 	  					libnetcdf-dev \
+					 	  					libblas-dev \
+					 	  					liblapack-dev \
 					 	  					libnetcdff6 \ 
 					 	  					libnetcdff-dev
 
@@ -38,27 +40,30 @@ WORKDIR /home/
 # Fortran ClimExp sourche. 
 # incomplete, edit Makefile.
 RUN git clone https://github.com/andrejsim/ClimExp-pyapi.git
+
+
+# build of climate explorer fortran source.
 RUN git clone http://climexp.knmi.nl/Fortran.git 
 
+ENV PVM_ARCH build
+
+RUN mkdir -p Fortran/${PVM_ARCH}
+
 RUN mkdir -p /nrf
-RUN cd nrf
-#RUN wget nrf.tar????
+WORKDIR /home/nrf
+####################RUN wget nrf.tar????
 COPY nrf/nrf.tar .
-
-
-#RUN tar -xf nrf.tar 
-#RUN make -f nrf.mk 
-#RUN mv libnr.a
+COPY nrf/nrf.mk .
+RUN tar -xf nrf.tar 
+RUN make -f nrf.mk 
+RUN cp libnr.a ../Fortran/${PVM_ARCH}
+#############
 
 WORKDIR /home/Fortran
 # missing files add to git.
 COPY ./Fortran/annual2shorter.f .
 COPY ./Fortran/patternfield.F .
 
- 
-
-ENV PVM_ARCH build
-RUN mkdir -p ${PVM_ARCH}
 
 RUN cp /home/ClimExp-pyapi/Makefile.docker ${PVM_ARCH}/Makefile
 #RUN cp /home/ClimExp-pyapi/Makefile.common .

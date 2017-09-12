@@ -72,3 +72,11 @@ EXTRAOBJS = getppid.o swapbyte.o
 # tar -xf nrf.tar        (download source)
 # make -f nrf.mk         (build locally)
 # cp libnr.a Fortran/ce  (add lib to Fortran)
+
+
+# add source file, *.f or *.F
+# annual2shorter.F (missing source file added )
+# patternfield.F   (missing source file added )
+include ../Makefile.common
+
+# available from andrej
