@@ -1,7 +1,12 @@
 .SUFFIXES: .f90 .o
+.SUFFIXES: .F90 .o
 
 .f90.o:
 	$(FC) $(FFLAGS)  -c $<
+
+.F90.o:
+	$(FC) $(FFLAGS)  -c $<
+
 
 CPPFLAGS = -I/sw/include -I/usr/local/free/include
 
@@ -9,7 +14,8 @@ VPATH         = ..
 
 MAKEFILE      = Makefile ../Makefile.common
 
-OBJS	      = makeabsent.o \
+OBJS	      = ncfiles_mod.o \
+		makeabsent.o \
 		makefieldabsent.o \
 		operations.o \
 		readdatfile.o \
@@ -23,7 +29,6 @@ OBJS	      = makeabsent.o \
 		readseries.o \
 		readensseries.o \
 		readsetseries.o \
-		readgridpoints.o \
 		readensdat.o \
 		readncseries.o \
 		printdatfile.o \
@@ -85,8 +90,6 @@ OBJS	      = makeabsent.o \
 		period.o \
 		getmean.o \
 		getwinmean.o \
-		seriesmoment.o \
-		seriesautocor.o \
 		rmean.o \
 		byteswapr4.o \
 		keepalive.o \
@@ -141,7 +144,6 @@ OBJS	      = makeabsent.o \
 		checkgridequal.o \
 		polint.o \
 		mysystem.o \
-		mystat.o \
 		getfiletime.o \
 		checkstring.o \
 		getfileunits.o \
@@ -168,7 +170,6 @@ OBJS	      = makeabsent.o \
 		getlsmask.o \
 		checklsmask.o \
 		applylsmask.o \
-		getmaskbox.o \
 		readonencfield.o \
 		project3.o \
 		fit.o \
@@ -186,8 +187,6 @@ OBJS	      = makeabsent.o \
 		legzo.o \
 		ftest.o \
 		getweightedquant.o \
-		wetbulb.o \
-		getmissing.o \
 		calcCDD.o \
 		calcCFD.o \
 		calcCSU.o \
@@ -305,7 +304,6 @@ PROGRAMS      = scientific2decimal \
 		dat2grads \
 		get_depth \
 		yearly2shorter \
-		yearly2shorterfield \
 		getval \
 		diffdat \
 		getunits \
@@ -347,20 +345,10 @@ PROGRAMS      = scientific2decimal \
 		polygon2box \
 		extremeseries \
 		transform \
-		gen_time \
-		ecmwf_times \
-		printbigtable \
-		synthesis \
-		testwetbulb \
-		compute_wetbulb \
-		wetbulb_field \
-		outliers \
-		count_missing \
-		setundef \
-		diff_hist_nat
+		gen_time
 
 SHLIBS =	rkillfile.so \
-       		rkeepalive.so
+		rkeepalive.so
 
 all:		$(PROGRAMS) $(SHLIBS) sstoi2dat
 
@@ -380,8 +368,8 @@ testprog:	testprog.o $(LIBRARY)
 testprog.o:	../testprog.F
 		$(LD) -g -c -o testprog.o ../testprog.F 
 
-correlate:	correlate.o $(LIBRARY)
-		$(LD) $(FFLAGS) $(LDBIGFLAG) -o $@ correlate.o $(LIBS)
+correlate:	correlations.o $(LIBRARY)
+		$(LD) $(FFLAGS) $(LDBIGFLAG) -o $@ correlations.o $(LIBS)
 
 correlatefield:	correlatefield.o $(LIBRARY)
 		$(LD) $(FFLAGS) $(LDBIGFLAG) -o $@ correlatefield.o $(LIBS)
@@ -454,6 +442,9 @@ flattennc:	flattennc.o  $(LIBRARY)
 
 flattennc_dec:	flattennc_dec.o  $(LIBRARY)
 		$(LD) $(FFLAGS) -o $@ flattennc_dec.o $(LIBS)
+
+patternfield.o:	../patternfield.F
+		$(LD) $(FFLAGS) -c ../patternfield.F -o patternfield.o
 
 patternfield:	patternfield.o  $(LIBRARY)
 		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)
@@ -538,9 +529,6 @@ extremeseries:	extremeseries.o $(LIBRARY)
 
 yearly2shorter:	yearly2shorter.o $(LIBRARY)
 		$(LD) $(FFLAGS) -o $@ yearly2shorter.o $(LIBRARY) $(LIBS)
-
-yearly2shorterfield:	yearly2shorterfield.o $(LIBRARY)
-		$(LD) $(FFLAGS) -o $@ yearly2shorterfield.o $(LIBRARY) $(LIBS)
 
 difffield:	difffield.o $(LIBRARY)
 		$(LD) $(FFLAGS) -o $@ $@.o $(LIBRARY) $(LIBS)
@@ -671,22 +659,19 @@ sstoi2dat:	sstoi2dat.o
 dat2grads:	dat2grads.o $(LIBRARY)
 		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)
 
-ar1:		ar1.o climexp.a
+ar1:		ar1.o
 		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)
 
 dat2nc:		dat2nc.o climexp.a
 		$(FC) $(FFLAGS) -o $@ $@.o $(LIBS)
 
-txt2dat:	txt2dat.o llen.o $(LIBRARY)
+txt2dat:	txt2dat.o llen.o
 		$(FC) $(FFLAGS) -o $@ $@.o $(LIBS)
 
 getunits:	getunits.o $(LIBRARY)
 		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)
 
 average_ensemble:	average_ensemble.o $(LIBRARY)
-		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)
-
-printbigtable:	printbigtable.o $(LIBRARY)
 		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)
 
 averagefield_ensemble:	averagefield_ensemble.o $(LIBRARY)
@@ -743,30 +728,6 @@ polygon2mask:	polygon2mask.o $(LIBRARY)
 polygon2box:	polygon2box.o
 		$(LD) $(FFLAGS) -o $@ $@.o
 
-ecmwf_times:	ecmwf_times.o
-		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)
-
-compute_wetbulb:	compute_wetbulb.o $(LIBRARY)
-		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)		
-
-wetbulb_field:	wetbulb_field.o $(LIBRARY)
-		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)		
-
-outliers:	outliers.o $(LIBRARY)
-		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)		
-
-count_missing:	count_missing.o $(LIBRARY)
-		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)		
-
-setundef:	setundef.o $(LIBRARY)
-		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)
-
-synthesis:	synthesis.o $(LIBRARY)
-		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)
-
-diff_hist_nat:	diff_hist_nat.o
-		$(LD) $(FFLAGS) -o $@ $@.o
-
 roc:		roc.o $(LIBRARY)
 		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)
 
@@ -812,9 +773,6 @@ testfitgevcov:	testfitgevcov.o $(LIBRARY)
 testshiftseries:	testshiftseries.o $(LIBRARY)
 		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)		
 
-testwetbulb:	testwetbulb.o $(LIBRARY)
-		$(LD) $(FFLAGS) -o $@ $@.o $(LIBS)		
-
 rkillfile.so:	rkillfile.f
 		R CMD SHLIB ../rkillfile.f
 
@@ -825,10 +783,10 @@ F2f90:  F2f90.o
 		$(LD) $(FFLAGS) -o $@ $@.o
 
 WAVEFILES = 	wave.F param.inc getopts.inc recfac.h netcdf.inc \
-		makeabsent.f readdat.F readncseries.f90 getopts.f90 \
-		sumit.f90 operations.f90 diffit.f anomal.f normon.f \
+		makeabsent.f readdat.F readncseries.F getopts.F \
+		sumit.f operations.f diffit.f anomal.f normon.f \
 		wavelet.f cfftpack.f chisqr.f \
-		parsectl.f writectl.F parsenc.f90 readncfile.f90 \
+		parsectl.f writectl.F parsenc.f90 readncfile.F90 \
 		llen.f rsunit.f getnumwords.f get_endian.f tolower.f
 
 wavecode.zip:	$(WAVEFILES)
@@ -839,4 +797,9 @@ climexp2extreme.o:	climexp2extreme.f90 extreme.h
 extreme.h:	comgeneral.h
 		grep 'yrbeg' ../comgeneral.h > ../$@
 		grep 'nseason' ../comgeneral.h >> ../$@
+
+ncfiles_mod.o: ncfiles_mod.F90
+	$(FC) $(FFLAGS)  -c $<
+
+
 
