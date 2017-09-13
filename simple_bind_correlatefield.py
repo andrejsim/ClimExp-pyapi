@@ -31,7 +31,7 @@ ave     = inputs["average"]["default"]
 var     = '3'
 target 	= inputs["netcdf_target"]["default"] 
 
-script = './Fortran/build/correlatefield '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' '+var+' '+str(target)
+script = '../Fortran/build/correlatefield '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' '+var+' '+str(target)
 
 print script
 
