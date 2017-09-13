@@ -4,7 +4,10 @@
 
 # generated
 
-def correlfield(location , inputs):
+# fortran build location / add as env in docker...
+location = '../Fortran/build/'
+
+def correlfield(inputs):
 	
 	try:
 
@@ -16,8 +19,9 @@ def correlfield(location , inputs):
 		var     = inputs["var"]["default"]
 		target 	= inputs["netcdf_target"]["default"
 
-		location = '../Fortran/build/correlatefield'
-		script = location+' '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' '+var+' '+str(target)
+		
+		fortran = 'correlatefield'
+		script = location+fortran+' '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' '+var+' '+str(target)
 
 		bind.execute(script)
 

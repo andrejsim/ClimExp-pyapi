@@ -5,7 +5,13 @@ import subprocess
 
 # pyhton bind for fortran
 
+
 def execute( script ):
+
+	# add workflow wrap here
+
+	# add provenance wrap here
+
 
 	print script
 

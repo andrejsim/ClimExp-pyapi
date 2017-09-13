@@ -3,8 +3,12 @@
 # python api
 import json
 
+
 inputfile = 'inputs_local.json'
 with open(inputfile, 'r') as fp:
   inputs = json.load(fp)
+
+
+# api call...
   
-climexp_pyapi.correlfield('../Fortran/build/correlatefield', inputs)
+climexp_pyapi.correlfield(inputs)
