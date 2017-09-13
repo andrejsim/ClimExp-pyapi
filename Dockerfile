@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y gfortran \
 
 
 #netcdf libraries
-RUN apt-get install -y  build-essential \
+RUN  apt-get update &&  apt-get install -y  build-essential \
                         libhdf5-dev \
                         netcdf-bin \
                         netcdf-doc \
@@ -52,6 +52,8 @@ RUN mkdir -p Fortran/${PVM_ARCH}
 
 RUN mkdir -p /nrf
 WORKDIR /home/nrf
+
+# get online
 ####################RUN wget nrf.tar????
 COPY nrf/nrf.tar .
 COPY nrf/nrf.mk .
@@ -60,6 +62,7 @@ RUN make -f nrf.mk
 RUN cp libnr.a ../Fortran/${PVM_ARCH}
 #############
 
+# need to be commited to core repo.
 WORKDIR /home/Fortran
 # missing files add to git.
 COPY ./Fortran/annual2shorter.f .
@@ -70,8 +73,19 @@ RUN cp /home/ClimExp-pyapi/Makefile.docker ${PVM_ARCH}/Makefile
 #RUN cp /home/ClimExp-pyapi/Makefile.common .
 COPY ./Fortran/Makefile.common .
 
+WORKDIR /home/Fortran/${PVM_ARCH}
+
+RUN make
 # run nc-config --all and compare to Makefile
 
 # docker build . --rm -t cef:test
 # docker run -it cef:test
 # docker run  -v /usr/people/mihajlov:/home/mihajlov -it  cef:test
+
+# install python, test and api.
+WORKDIR /home/ClimExp-pyapi
+
+RUN apt-get install -y python python-dev python-distribute python-pip
+RUN pip install --upgrade pip
+RUN pip install scipy numpy netcdf4 xarray datetime pprint
+

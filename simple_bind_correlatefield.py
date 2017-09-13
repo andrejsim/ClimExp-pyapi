@@ -31,7 +31,7 @@ ave     = inputs["average"]["default"]
 var     = '3'
 target 	= inputs["netcdf_target"]["default"] 
 
-script = './Fortran/makenew/correlatefield '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' '+var+' '+str(target)
+script = './Fortran/build/correlatefield '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' '+var+' '+str(target)
 
 print script
 
@@ -39,7 +39,7 @@ try:
     process = subprocess.Popen( script  , shell=True).communicate() 
     print str(process)
 except Exception, e:
-    print "Popen process failed"
+    print "Popen process failed: "+script
     raise e
 
 #,stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE
@@ -52,11 +52,17 @@ except Exception, e:
 
 #  /usr/people/mihajlov/climexp/
 
+
+# VIEW with ncview out.nc
+
 ####
 # metadata
 # #
-ncout = xarray.load
-ncout = xarray.Dataset(target,'a')
+#ncout = xarray.open_dataset('out.nc')
+
+#print(ncout)
+
+#ncout = xarray.Dataset(target,'a')
 
 # ''' metadata appended, inspire worthy '''
 # ncout.setncattr(  "title"        , "KNMI Climate Explorer correlate field service output" )
