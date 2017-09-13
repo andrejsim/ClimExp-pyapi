@@ -87,5 +87,10 @@ WORKDIR /home/ClimExp-pyapi
 
 RUN apt-get install -y python python-dev python-distribute python-pip
 RUN pip install --upgrade pip
-RUN pip install scipy numpy netcdf4 xarray datetime pprint
+RUN pip install scipy numpy pandas netcdf4 xarray datetime pprint
 
+# data is not provided
+# download location:  http://opendap.knmi.nl/knmi/thredds/dodsC/climate_explorer/
+#
+# or map with volume:
+# docker run -v ~/climexp/DATA/:/root/climexp/DATA/ -it cef

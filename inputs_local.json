@@ -42,5 +42,11 @@
     "identifier": "frequency", 
     "values": null, 
     "title": "Frequency"
+  },
+  "var": {
+    "default": "3", 
+    "identifier": "var", 
+    "values": null, 
+    "title": "var"
   }
 }
