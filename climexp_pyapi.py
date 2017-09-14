@@ -15,7 +15,7 @@ except Exception, e:
 
 #http://climexp.knmi.nl/fieldcorrseries.cgi?id=someone@somewhere&field=ghcn_cams_05
 
-def correlfield(inputs):
+def correlatefield(inputs):
 	
 	try:
 

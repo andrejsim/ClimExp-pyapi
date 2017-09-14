@@ -1,0 +1,62 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "Climate Exmplorer Web API example",
+        "description": "#### ClimExp web api \n"
+    },
+    "schemes": [
+        "http"
+    ],
+    "host": "127.0.0.1",
+    "basePath": "/climexp/",
+    "paths": {
+        "/correlatefield/": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "correlatefield GET"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "netcdf_source1",
+                    "in": "formData",
+                    "description": "field1 netcdf file used as source",
+                    "type": "string"
+                },
+                {
+                    "name": "netcdf_source2",
+                    "in": "formData",
+                    "description": "field2 netcdf file used as source",
+                    "type": "string"
+                },
+                {
+                    "name": "frequency",
+                    "in": "formData",
+                    "description": "freq?",
+                    "type": "string"
+                },
+                {
+                    "name": "average",
+                    "in": "formData",
+                    "description": "avg?",
+                    "type": "string"
+                },
+                {
+                    "name": "var",
+                    "in": "formData",
+                    "description": "var?",
+                    "type": "string"
+                },
+                {
+                    "name": "netcdf_target",
+                    "in": "formData",
+                    "description": "netcdf file used as output",
+                    "type": "string"
+                }
+            ]
+        }
+    }
+}
