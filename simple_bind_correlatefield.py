@@ -28,8 +28,9 @@ sourceB = inputs["netcdf_source2"]["default"]
 freq    = inputs["frequency"]["default"]
 ratio   = inputs["ratio"]["default"]
 ave     = inputs["average"]["default"]
-var     = inputs["var"]
+var     = inputs["var"]["default"]
 target 	= inputs["netcdf_target"]["default"] 
+
 
 script = '../Fortran/build/correlatefield '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' '+var+' '+str(target)
 

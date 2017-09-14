@@ -25,16 +25,6 @@ RUN  apt-get update &&  apt-get install -y  build-essential \
                         libnetcdff-dev \
                         r-base
 
-
-  #installed here by libhdf5-dev (there is also a libhdf5-serial-dev...)
-  #ENV H5DIR /usr/lib/x86_64-linux-gnu/hdf5/serial
-  #ENV CPPFLAGS -I${H5DIR}/include 
-  #ENV LDFLAGS -L${H5DIR}/lib
-
-  #ENV PATH $PATH:${H5DIR}/lib
-  #ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:${H5DIR}/lib 
-  #ENV PATH $PATH:${H5DIR}/lib
-
 # work from home or opt?
 WORKDIR /home/
 
@@ -44,11 +34,13 @@ RUN git clone https://github.com/andrejsim/ClimExp-pyapi.git
 
 
 # build of climate explorer fortran source.
-RUN git clone http://climexp.knmi.nl/Fortran.git 
+ENV FORTRAN Fortran
+#RUN git clone http://climexp.knmi.nl/Fortran.git
+RUN git clone https://github.com/andrejsim/ClimExp-fortran.git ${FORTRAN}
 
 ENV PVM_ARCH build
 
-RUN mkdir -p Fortran/${PVM_ARCH}
+RUN mkdir -p ${FORTRAN}/${PVM_ARCH}
 
 RUN mkdir -p /nrf
 WORKDIR /home/nrf
@@ -59,21 +51,21 @@ COPY nrf/nrf.tar .
 COPY nrf/nrf.mk .
 RUN tar -xf nrf.tar 
 RUN make -f nrf.mk 
-RUN cp libnr.a ../Fortran/${PVM_ARCH}
+RUN cp libnr.a ../${FORTRAN}/${PVM_ARCH}
 #############
 
 # need to be commited to core repo.
-WORKDIR /home/Fortran
+WORKDIR /home/${FORTRAN}
 # missing files add to git.
-COPY ./Fortran/annual2shorter.f .
-COPY ./Fortran/patternfield.F .
+COPY ./${FORTRAN}/annual2shorter.f .
+COPY ./${FORTRAN}/patternfield.F .
 
 
 RUN cp /home/ClimExp-pyapi/Makefile.docker ${PVM_ARCH}/Makefile
 #RUN cp /home/ClimExp-pyapi/Makefile.common .
-COPY ./Fortran/Makefile.common .
+COPY ./${FORTRAN}/Makefile.common .
 
-WORKDIR /home/Fortran/${PVM_ARCH}
+WORKDIR /home/${FORTRAN}/${PVM_ARCH}
 
 RUN make
 # run nc-config --all and compare to Makefile
