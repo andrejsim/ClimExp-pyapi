@@ -1,0 +1,50 @@
+---
+swagger: "2.0"
+info:
+  description: "#### ClimExp web api \n"
+  version: "0.0.1"
+  title: "Climate Exmplorer Web API example"
+host: "127.0.0.1"
+basePath: "/climexp/"
+schemes:
+- "http"
+paths:
+  /correlatefield/:
+    get:
+      operationId: "correlatefield_get"
+      parameters:
+      - name: "netcdf_source1"
+        in: "formData"
+        description: "field1 netcdf file used as source"
+        required: false
+        type: "string"
+      - name: "netcdf_source2"
+        in: "formData"
+        description: "field2 netcdf file used as source"
+        required: false
+        type: "string"
+      - name: "frequency"
+        in: "formData"
+        description: "freq?"
+        required: false
+        type: "string"
+      - name: "average"
+        in: "formData"
+        description: "avg?"
+        required: false
+        type: "string"
+      - name: "var"
+        in: "formData"
+        description: "var?"
+        required: false
+        type: "string"
+      - name: "netcdf_target"
+        in: "formData"
+        description: "netcdf file used as output"
+        required: false
+        type: "string"
+      responses:
+        200:
+          description: "correlatefield GET"
+      x-swagger-router-controller: "swagger_server.controllers.default_controller"
+definitions: {}
