@@ -53,14 +53,8 @@ RUN cp libnr.a ../${FORTRAN}/${PVM_ARCH}
 
 # need to be commited to core repo.
 WORKDIR /home/${FORTRAN}
-# missing files add to git.
-COPY ./${FORTRAN}/annual2shorter.f .
-COPY ./${FORTRAN}/patternfield.F .
-
 
 RUN cp /home/ClimExp-pyapi/Makefile.docker ${PVM_ARCH}/Makefile
-#RUN cp /home/ClimExp-pyapi/Makefile.common .
-COPY ./${FORTRAN}/Makefile.common .
 
 WORKDIR /home/${FORTRAN}/${PVM_ARCH}
 
