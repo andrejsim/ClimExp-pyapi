@@ -18,7 +18,6 @@ with open(inputfile, 'r') as fp:
 
 pprint(inputs)
 
-
 ###
 # binding
 #
@@ -30,7 +29,6 @@ ratio   = inputs["ratio"]["default"]
 ave     = inputs["average"]["default"]
 var     = inputs["var"]["default"]
 target 	= inputs["netcdf_target"]["default"] 
-
 
 script = '../Fortran/build/correlatefield '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' '+var+' '+str(target)
 
