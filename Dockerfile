@@ -45,14 +45,11 @@ RUN mkdir -p ${FORTRAN}/${PVM_ARCH}
 RUN mkdir -p /nrf
 WORKDIR /home/nrf
 
-# get online
-####################RUN wget nrf.tar????
-COPY nrf/nrf.tar .
-COPY nrf/nrf.mk .
+# moved this library temporarily to git hub, can not locate relevant source online. (Pending)
+RUN git clone https://github.com/andrejsim/nrf .
 RUN tar -xf nrf.tar 
 RUN make -f nrf.mk 
 RUN cp libnr.a ../${FORTRAN}/${PVM_ARCH}
-#############
 
 # need to be commited to core repo.
 WORKDIR /home/${FORTRAN}
