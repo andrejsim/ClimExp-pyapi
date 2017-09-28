@@ -11,7 +11,7 @@ Project is Docker ready.
 ```
 docker build . --rm -t cef:test
 docker run -it cef:test
-docker run  -v /usr/people/mihajlov:/home/mihajlov -it  cef:test
+docker run -v <localmount_of_opendap_data>:/root/climexp/DATA/ -it cef
 ```
 
 Data for deomo is available as, open data for correlate function:
