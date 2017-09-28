@@ -13,6 +13,17 @@ import bind
 
 ''' field selection, right columb of web page: http://climexp.knmi.nl/start.cgi '''
 
+'''
+daily
+  http://climexp.knmi.nl/selectdailyseries.cgi?id=someone@somewhere
+
+monthly indices
+  http://climexp.knmi.nl/selectindex.cgi?id=someone@somewhere
+
+user-defined
+  http://climexp.knmi.nl/userseries.cgi?id=someone@somewhere  
+'''  
+
 def get_select_timeseries(seriesname):
   
   # implement portable data repository (required for c3s-magic)
@@ -28,6 +39,15 @@ def get_select_timeseries(seriesname):
     # View, upload your time series
 
   # important nino3 etc time series data links included here.
+
+
+''' 
+monthly data
+  http://climexp.knmi.nl/select.cgi?id=someone@somewhere&field=cru_tmn_25 
+
+CMIP5 data  
+  http://climexp.knmi.nl/selectfield_cmip5_annual.cgi?id=someone@somewhere
+'''
 
 def get_select_a_field(fieldname):
 
@@ -66,8 +86,11 @@ def temporal_slice():
 def averaging():   
   # can be done by wps elsewhere.
 
+
 ''' viusalisation services, follow field selection '''
 ''' right column option under "Investigate this field" '''
+
+''' http://climexp.knmi.nl/plotform.cgi?id=someone@somewhere&field=cru_tmn_25 '''
 
 def plot(field):
   ''' ADAGUC SERVICE ''' 
@@ -102,10 +125,13 @@ def make_EOFs(field):
 
 
 
-
 ''' used as demo diagnostic feature for c3s-magic '''
 
 def correlate_with_a_time_series(field,series):
+
+  ''' 
+    http://climexp.knmi.nl/fieldcorrseries.cgi?id=someone@somewhere&field=cru_tmn_25 
+  '''
 
     # IMPLEMENTED at 
     #   def correlatefield(inputs):
