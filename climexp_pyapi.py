@@ -26,11 +26,11 @@ user-defined
 
 def get_select_timeseries(seriesname):
   
-  # implement portable data repository (required for c3s-magic)
+  # IMPLEMENT portable data repository (required for c3s-magic)
 
-  # implement data list
+  # IMPLEMENT data list
 
-  # implement search wizard (model on climate4impact fasceted search tool)
+  # IMPLEMENT search wizard (model on climate4impact fasceted search tool)
     # Daily station data
     # Daily climate indices
     # Monthly station data
@@ -51,11 +51,11 @@ CMIP5 data
 
 def get_select_a_field(fieldname):
 
-  # implement portable data repository (required for c3s-magic)
+  # IMPLEMENT portable data repository (required for c3s-magic)
 
-  # implement data list
+  # IMPLEMENT data list
 
-  # implement search wizard (model on climate4impact fasceted search tool)
+  # IMPLEMENT search wizard (model on climate4impact fasceted search tool)
     # Daily fields
     # Monthly observations # ( current example uses these )
     # Monthly reanalysis fields
@@ -78,6 +78,8 @@ def get_select_a_field(fieldname):
     '''  
 
 def make_time_series(field):
+  # IMPLEMENT BY RECYCLING WPSs
+
 
 def mask(field):
 
