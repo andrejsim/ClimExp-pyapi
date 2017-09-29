@@ -41,41 +41,46 @@ def get_select_timeseries(seriesname):
   # important nino3 etc time series data links included here.
   pass
 
-''' 
-  monthly data
-    http://climexp.knmi.nl/select.cgi?id=someone@somewhere&field=cru_tmn_25 
 
-  CMIP5 data  
-    http://climexp.knmi.nl/selectfield_cmip5_annual.cgi?id=someone@somewhere
-'''
+
+
+
+  ''' 
+    monthly data
+      http://climexp.knmi.nl/select.cgi?id=someone@somewhere&field=cru_tmn_25 
+
+    CMIP5 data  
+      http://climexp.knmi.nl/selectfield_cmip5_annual.cgi?id=someone@somewhere
+  '''
 
 def get_select_a_field(fieldname):
   pass
+
   # IMPLEMENT portable data repository (required for c3s-magic)
 
   # IMPLEMENT data list
 
   # IMPLEMENT search wizard (model on climate4impact fasceted search tool)
-    # Daily fields
-    # Monthly observations # ( current example uses these )
-    # Monthly reanalysis fields
-    # Monthly and seasonal historical reconstructions
-    # Monthly seasonal hindcasts
-    # Monthly decadal hindcasts
-    # Monthly CMIP3+ scenario runs
-    # Monthly CMIP5 scenario runs # ( c3s-magic is focused on these )
-    # Annual CMIP5 extremes
-    # Monthly CORDEX scenario runs
-    # Attribution runs
-    # External data (ensembles, ncep, enact, soda, ecmwf, ...)
+  # Daily fields
+  # Monthly observations # ( current example uses these )
+  # Monthly reanalysis fields
+  # Monthly and seasonal historical reconstructions
+  # Monthly seasonal hindcasts
+  # Monthly decadal hindcasts
+  # Monthly CMIP3+ scenario runs
+  # Monthly CMIP5 scenario runs # ( c3s-magic is focused on these )
+  # Annual CMIP5 extremes
+  # Monthly CORDEX scenario runs
+  # Attribution runs
+  # External data (ensembles, ncep, enact, soda, ecmwf, ...)
 
 
-    # IMPORTANT PREPROCESSING DONE HERE
-    ''' 
-      conversion to time series offered
-      filters offered
-      masks offered
-    '''  
+  # IMPORTANT PREPROCESSING DONE HERE
+  ''' 
+    conversion to time series offered
+    filters offered
+    masks offered
+  '''  
 
 def make_time_series(field):
   # IMPLEMENT BY RECYCLING WPSs
@@ -184,35 +189,33 @@ Verify field against observations
 ''' python api for fortran code of climate exp '''
 
 # fortran build location / add as env in docker...
-try:
-  location = os.environ['CLIMEXPFORTRAN']
-except Exception, e:
-  location = '../Fortran/build/'
-
 
 ''' correlatefield fortran function execution '''
 # http://climexp.knmi.nl/fieldcorrseries.cgi?id=someone@somewhere&field=ghcn_cams_05
 
 def correlatefield(inputs):
-	
-	try:
 
-		sourceA = inputs["netcdf_source1"]
-		sourceB = inputs["netcdf_source2"]
-		freq    = inputs["frequency"]
-		ratio   = inputs["ratio"]
-		ave     = inputs["average"]
-		var     = inputs["var"]
-		target 	= inputs["netcdf_target"]
+  try:
 
-		fortran = 'correlatefield'
-		
-		script = location+fortran+' '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' '+var+' '+str(target)
+    sourceA = inputs["netcdf_source1"].getValue()
+    sourceB = inputs["netcdf_source2"].getValue()
+    freq    = inputs["frequency"].getValue()
+    ratio   = inputs["ratio"].getValue()
+    ave     = inputs["average"].getValue()
+    var     = inputs["var"].getValue()
+    target  = inputs["netcdf_target"].getValue()
 
-		bind.execute(script)
+    fortran = 'correlatefield'
+      
+    # CLIMEXPFORTRAN=/usr/people/mihajlov/docker/ClimExp-pyapi/Fortran/
+    location = os.environ['CLIMEXPFORTRAN'] 
 
-	except Exception, e:
-		raise e
+    script = location+fortran+' '+sourceA+' '+sourceB+' '+freq+' '+ratio+' '+ave+' '+var+' '+str(target)
+
+    bind.execute(script)
+
+  except Exception, e:
+    raise e
 
 
 
