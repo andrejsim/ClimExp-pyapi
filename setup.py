@@ -7,5 +7,5 @@ setup(name='ClimateExplorer PYWPS',
       description='Provenance tools used by PyWPS with NetCDFs',
       author='Andrej Mihajlovski, Alessandro Spinuso',
       author_email='esgf@knmi.nl',
-      packages=['wpsproc'],
+      packages=['wpsproc','climexp'],
       )

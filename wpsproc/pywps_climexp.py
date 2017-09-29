@@ -18,7 +18,7 @@ import json
 # generic KNMI process
 class KnmiClimateExplorerWpsProcess(WPSProcess):
 
-    def __init__(self,wpsin=wpsin):
+    def __init__(self,wpsin):
 
         # self.fileOutPath1 = None
         # self.fileOutURL = ""
@@ -50,18 +50,22 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         self.inputs = wpsin["inputs"]
 
         from pprint import pprint
-        pprint(self.inputs)
+        #pprint(self.inputs)
         
+
+        print self.inputs.keys()
+
         # for inputDict in descriptor.inputsTuple:
-        for inputDict in self.inputs:
-            if inputDict.has_key("abstract"): 
+        for inputDict in self.inputs.values():
+            pprint(inputDict.keys())
+            try:
                 self.inputs[inputDict["identifier"]] = self.addLiteralInput(  identifier = inputDict["identifier"] ,
                                                                               title      = inputDict["title"],
                                                                               type       = inputDict["type"],
                                                                               default    = inputDict["default"], 
                                                                               abstract   = inputDict["abstract"]
                                                                               ) 
-            else:
+            except Exception, e:
                 self.inputs[inputDict["identifier"]] = self.addLiteralInput(  identifier = inputDict["identifier"] ,
                                                                               title      = inputDict["title"],
                                                                               type       = inputDict["type"],
@@ -170,6 +174,8 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         ''' PROCESS OUTPUTs '''
         # content, source , fileO = self.processExecuteCallback( self.inputs , callback , self.fileOutPath1 )
 
+        
+
         # self.netcdf_w = fileO
 
         size = 0
@@ -191,8 +197,8 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         # callback(80)
 
 
-        prov.content = { "prov:type" : "data_element" }
-        prov.content.update( content )
+        #prov.content = { "prov:type" : "data_element" }
+        #prov.content.update( content )
         #prov.content = content
 
         #callback(90,info='finish provenance')
