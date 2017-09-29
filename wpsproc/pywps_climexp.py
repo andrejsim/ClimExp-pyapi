@@ -6,6 +6,8 @@ import provenance
 # import sys, traceback #traceback.print_exc(file=sys.stdout)
 import netCDF4
 import json
+from climexp import climexp_pyapi
+
 # project: C3S 34a Lot2
 # author: ANDREJ
 # adapting wps from c4i to provenance culture.
@@ -49,15 +51,8 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         
         self.inputs = wpsin["inputs"]
 
-        from pprint import pprint
-        #pprint(self.inputs)
-        
-
-        print self.inputs.keys()
-
         # for inputDict in descriptor.inputsTuple:
         for inputDict in self.inputs.values():
-            pprint(inputDict.keys())
             try:
                 self.inputs[inputDict["identifier"]] = self.addLiteralInput(  identifier = inputDict["identifier"] ,
                                                                               title      = inputDict["title"],
@@ -174,12 +169,12 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         ''' PROCESS OUTPUTs '''
         # content, source , fileO = self.processExecuteCallback( self.inputs , callback , self.fileOutPath1 )
 
-        climexp_pyapi.c
+        climexp_pyapi.correlatefield(self.inputs)
 
 
         # self.netcdf_w = fileO
 
-        size = 0
+        size = 666
         
         # if fileO is not None:
             # self.callback("Finished wps."+str(fileO), 70)
@@ -198,7 +193,7 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         # callback(80)
 
 
-        #prov.content = { "prov:type" : "data_element" }
+        prov.content = { "prov:type" : "data_element" }
         #prov.content.update( content )
         #prov.content = content
 
@@ -214,7 +209,7 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
      
 
         ''' adds knmi_prov '''
-        prov.finish( source , outputurl ,size)  
+        prov.finish( 'source' , 'outputurl' ,size)  
 
         ''' finalise prov and write to netcdf '''
         prov.closeProv()
