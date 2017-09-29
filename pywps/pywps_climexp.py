@@ -5,7 +5,7 @@ from datetime import datetime
 import provenance
 # import sys, traceback #traceback.print_exc(file=sys.stdout)
 import netCDF4
-
+import json
 # project: C3S 34a Lot2
 # author: ANDREJ
 # adapting wps from c4i to provenance culture.
@@ -18,6 +18,8 @@ import netCDF4
 # generic KNMI process
 class KnmiClimateExplorerWpsProcess(WPSProcess):
 
+
+
     def __init__(self):
 
         # self.fileOutPath1 = None
@@ -25,14 +27,19 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         # self.bundle = None
         # self.output = None
 
+
+
         wps["identifier"]   = 'climexp' 
         wps["title"]        = 'Climate Exmplorer KNMI'
         wps["abstract"]     = 'KNMI Diagnostic Tool Climate Explorer'
         wps["version"]      = '1.0.0'
-        wps["storeSupported"]  = 
-        wps["statusSupported"] =
-        wps["grassLocation"]   =
+        wps["storeSupported"]  = True
+        wps["statusSupported"] = True   
+        wps["grassLocation"]   = False
 
+        inputfile = 'inputs.json'
+        with open(inputfile, 'r') as fp:
+            self.inputs = json.load(fp)
 
         WPSProcess.__init__(self,
                             identifier      = wps["identifier"], 
@@ -45,41 +52,37 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
                             )
         
 
-        # self.descriptor = descriptor
-
-        # descriptor.process = self 
         
-        
-        # for inputDict in descriptor.inputsTuple:
+        for inputDict in descriptor.inputsTuple:
 
-        #     if inputDict.has_key("abstract"): 
-        #         self.inputs[inputDict["identifier"]] = self.addLiteralInput(  identifier = inputDict["identifier"] ,
-        #                                                                       title      = inputDict["title"],
-        #                                                                       type       = inputDict["type"],
-        #                                                                       default    = inputDict["default"], 
-        #                                                                       abstract   = inputDict["abstract"]
-        #                                                                       ) 
-        #     else:
-        #         self.inputs[inputDict["identifier"]] = self.addLiteralInput(  identifier = inputDict["identifier"] ,
-        #                                                                       title      = inputDict["title"],
-        #                                                                       type       = inputDict["type"],
-        #                                                                       default    = inputDict["default"] 
-        #                                                               ) 
-        #     #######
-        #     #abstract="application/netcdf"
-        #     try:              
-        #         if inputDict["maxOccurs"] is not None:
-        #             self.inputs[inputDict["identifier"]].maxOccurs = inputDict["maxOccurs"]
-        #     except Exception, e:
-        #         #print "no maxOccurs"
-        #         pass
+            if inputDict.has_key("abstract"): 
+                self.inputs[inputDict["identifier"]] = self.addLiteralInput(  identifier = inputDict["identifier"] ,
+                                                                              title      = inputDict["title"],
+                                                                              type       = inputDict["type"],
+                                                                              default    = inputDict["default"], 
+                                                                              abstract   = inputDict["abstract"]
+                                                                              ) 
+            else:
+                self.inputs[inputDict["identifier"]] = self.addLiteralInput(  identifier = inputDict["identifier"] ,
+                                                                              title      = inputDict["title"],
+                                                                              type       = inputDict["type"],
+                                                                              default    = inputDict["default"] 
+                                                                      ) 
+            #######
+            #abstract="application/netcdf"
+            try:              
+                if inputDict["maxOccurs"] is not None:
+                    self.inputs[inputDict["identifier"]].maxOccurs = inputDict["maxOccurs"]
+            except Exception, e:
+                #print "no maxOccurs"
+                pass
                 
-        #     try:              
-        #         if inputDict["values"] is not None:
-        #             self.inputs[inputDict["identifier"]].values = inputDict["values"]
-        #     except Exception, e:
-        #         #print "no values"
-        #         pass
+            try:              
+                if inputDict["values"] is not None:
+                    self.inputs[inputDict["identifier"]].values = inputDict["values"]
+            except Exception, e:
+                #print "no values"
+                pass
 
 
         # self.processExecuteCallback = descriptor.processExecuteCallback
@@ -142,7 +145,7 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         # use prov call back later... each start creates lineage info
         prov = provenance.MetadataD4P(  name=self.identifier , 
                                         description=self.abstract ,
-                                        username="c3s_user" 
+                                        username="c3s_user" ,
                                         inputs=self.inputs ,
                                         bundle0=self.bundle 
                                         ) #does wps provide a user id...
@@ -193,7 +196,7 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         prov.content.update( content )
         #prov.content = content
 
-        callback(90,info='finish provenance')
+        #callback(90,info='finish provenance')
 
         # prov.output = fileO  
         

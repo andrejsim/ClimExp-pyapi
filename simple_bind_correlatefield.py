@@ -22,9 +22,9 @@ pprint(inputs)
 # binding
 #
 
-sourceA = inputs["netcdf_source1"]["default"]
-sourceB = inputs["netcdf_source2"]["default"]
-freq    = inputs["frequency"]["default"]
+sourceA = inputs["netcdf_source1"]["default"] # field
+sourceB = inputs["netcdf_source2"]["default"] # time series
+freq    = inputs["frequency"]["default"] # mon
 ratio   = inputs["ratio"]["default"]
 ave     = inputs["average"]["default"]
 var     = inputs["var"]["default"]

@@ -23,8 +23,9 @@ from collections import defaultdict
 from copy import deepcopy
 import io
 
-from knmi_wps_processes import *
-from knmi_wps_processes.prov import Error, serializers
+#from pywps import *
+#from pywps.prov import Error, serializers
+
 #import Error 
 # import serializers
 #from prov import Error, serializers
@@ -36,9 +37,12 @@ import tempfile
 from six.moves.urllib.parse import urlparse
 
 
-from knmi_wps_processes.prov.identifier import Identifier, QualifiedName
-from knmi_wps_processes.prov.constants import *
+#from pywps.prov.identifier import Identifier, QualifiedName
+#from pywps.prov.constants import *
 
+from prov import Error, serializers
+from prov.identifier import Identifier, QualifiedName
+from prov.constants import *
 
 # Data Types
 def _ensure_datetime(value):

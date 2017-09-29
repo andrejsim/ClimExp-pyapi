@@ -1,6 +1,6 @@
 # 
 # Institute: KNMI
-# Project: CLIPC
+# Project: C3S 34a Lot2
 # Module:  Provenance
 # Authors: Andrej M, Alessandro S.
 #
@@ -21,8 +21,7 @@ import sys, traceback #traceback.print_exc(file=sys.stdout)
 
 from xml.sax.saxutils import escape
 
-import knmi_wps_processes
-##########################################
+################
 # import knmi_wps_processes.prov as prov
 from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 #from prov.serializers import provjson

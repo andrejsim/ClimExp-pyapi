@@ -8,8 +8,7 @@ __all__ = [
     'get'
 ]
 
-from knmi_wps_processes.prov import Error
-#from knmi_wps_processes import prov
+from prov import Error
 
 class Serializer(object):
     def __init__(self, document=None):
