@@ -18,28 +18,24 @@ import json
 # generic KNMI process
 class KnmiClimateExplorerWpsProcess(WPSProcess):
 
-
-
-    def __init__(self):
+    def __init__(self,wpsin=wpsin):
 
         # self.fileOutPath1 = None
         # self.fileOutURL = ""
-        # self.bundle = None
+        self.bundle = None # used to add provs...
         # self.output = None
 
 
+        # wps = {}
+        # wps["identifier"]   = 'climexp' 
+        # wps["title"]        = 'Climate Exmplorer KNMI'
+        # wps["abstract"]     = 'KNMI Diagnostic Tool Climate Explorer'
+        # wps["version"]      = '1.0.0'
+        # wps["storeSupported"]  = True
+        # wps["statusSupported"] = True   
+        # wps["grassLocation"]   = False
 
-        wps["identifier"]   = 'climexp' 
-        wps["title"]        = 'Climate Exmplorer KNMI'
-        wps["abstract"]     = 'KNMI Diagnostic Tool Climate Explorer'
-        wps["version"]      = '1.0.0'
-        wps["storeSupported"]  = True
-        wps["statusSupported"] = True   
-        wps["grassLocation"]   = False
-
-        inputfile = 'inputs.json'
-        with open(inputfile, 'r') as fp:
-            self.inputs = json.load(fp)
+        wps = wpsin["wps"]
 
         WPSProcess.__init__(self,
                             identifier      = wps["identifier"], 
@@ -51,10 +47,13 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
                             grassLocation   = wps["grassLocation"]
                             )
         
+        self.inputs = wpsin["inputs"]
 
+        from pprint import pprint
+        pprint(self.inputs)
         
-        for inputDict in descriptor.inputsTuple:
-
+        # for inputDict in descriptor.inputsTuple:
+        for inputDict in self.inputs:
             if inputDict.has_key("abstract"): 
                 self.inputs[inputDict["identifier"]] = self.addLiteralInput(  identifier = inputDict["identifier"] ,
                                                                               title      = inputDict["title"],

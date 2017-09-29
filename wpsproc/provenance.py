@@ -367,6 +367,8 @@ class MetadataD4P(object):
 
         self.lineage={}
 
+        print inputs.keys()
+
         if bundle0 is None:
             # create new bundle
             #create bundle with new MetadataDP, replace with real D4P soon...
@@ -395,7 +397,10 @@ class MetadataD4P(object):
             try:
                 memfile = StringIO.StringIO(inputs['tags'].getValue())
             except Exception, e:
-                memfile = StringIO.StringIO(inputs['tags'])
+                try:
+                    memfile = StringIO.StringIO(inputs['tags']['default'])
+                except Exception, e2:
+                    memfile = StringIO.StringIO(inputs['tags'])
             
 
             self.bundle['tags'] = csv.reader(memfile).next()
