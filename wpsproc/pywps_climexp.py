@@ -174,7 +174,8 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         ''' PROCESS OUTPUTs '''
         # content, source , fileO = self.processExecuteCallback( self.inputs , callback , self.fileOutPath1 )
 
-        
+        climexp_pyapi.c
+
 
         # self.netcdf_w = fileO
 

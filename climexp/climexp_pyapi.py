@@ -14,14 +14,14 @@ import bind
 ''' field selection, right columb of web page: http://climexp.knmi.nl/start.cgi '''
 
 '''
-daily
-  http://climexp.knmi.nl/selectdailyseries.cgi?id=someone@somewhere
+  daily
+    http://climexp.knmi.nl/selectdailyseries.cgi?id=someone@somewhere
 
-monthly indices
-  http://climexp.knmi.nl/selectindex.cgi?id=someone@somewhere
+  monthly indices
+    http://climexp.knmi.nl/selectindex.cgi?id=someone@somewhere
 
-user-defined
-  http://climexp.knmi.nl/userseries.cgi?id=someone@somewhere  
+  user-defined
+    http://climexp.knmi.nl/userseries.cgi?id=someone@somewhere  
 '''  
 
 def get_select_timeseries(seriesname):
@@ -39,18 +39,18 @@ def get_select_timeseries(seriesname):
     # View, upload your time series
 
   # important nino3 etc time series data links included here.
-
+  pass
 
 ''' 
-monthly data
-  http://climexp.knmi.nl/select.cgi?id=someone@somewhere&field=cru_tmn_25 
+  monthly data
+    http://climexp.knmi.nl/select.cgi?id=someone@somewhere&field=cru_tmn_25 
 
-CMIP5 data  
-  http://climexp.knmi.nl/selectfield_cmip5_annual.cgi?id=someone@somewhere
+  CMIP5 data  
+    http://climexp.knmi.nl/selectfield_cmip5_annual.cgi?id=someone@somewhere
 '''
 
 def get_select_a_field(fieldname):
-
+  pass
   # IMPLEMENT portable data repository (required for c3s-magic)
 
   # IMPLEMENT data list
@@ -79,14 +79,18 @@ def get_select_a_field(fieldname):
 
 def make_time_series(field):
   # IMPLEMENT BY RECYCLING WPSs
-
+  pass
 
 def mask(field):
+  pass
 
 def temporal_slice():
   # can be done by wcs
+  pass
+
 def averaging():   
   # can be done by wps elsewhere.
+  pass
 
 
 ''' viusalisation services, follow field selection '''
@@ -97,9 +101,13 @@ def averaging():
 def plot(field):
   ''' ADAGUC SERVICE ''' 
   #IMPLEMENT
+  pass
+
 
 def plot_difference_with_field(field1,field2):
-  ''' COMBINE SERVICE see climate4impact '''
+  pass
+
+''' COMBINE SERVICE see climate4impact '''
   # IMPLEMENT
 
 ''' filter selection, follows field choice '''
@@ -109,7 +117,9 @@ def plot_difference_with_field(field1,field2):
 ''' transformation of fields to time series '''
 ''' simple example is daily, monthly or annual average of data climate4impact has examples of these micro services'''
 
+
 def compute_statistics(field):
+  pass
 
   # IMPLEMENT, link to fortran code.
 
@@ -118,11 +128,12 @@ def compute_statistics(field):
   # extremes
 
 def trend_in_extremes(field):
+  pass
 
   # IMPLEMENT
 
 def make_EOFs(field):
-
+  pass
   # IMPLEMENT
 
 
@@ -130,6 +141,7 @@ def make_EOFs(field):
 ''' used as demo diagnostic feature for c3s-magic '''
 
 def correlate_with_a_time_series(field,series):
+  pass
 
   ''' 
     http://climexp.knmi.nl/fieldcorrseries.cgi?id=someone@somewhere&field=cru_tmn_25 
@@ -185,13 +197,13 @@ def correlatefield(inputs):
 	
 	try:
 
-		sourceA = inputs["netcdf_source1"]["default"]
-		sourceB = inputs["netcdf_source2"]["default"]
-		freq    = inputs["frequency"]["default"]
-		ratio   = inputs["ratio"]["default"]
-		ave     = inputs["average"]["default"]
-		var     = inputs["var"]["default"]
-		target 	= inputs["netcdf_target"]["default"]
+		sourceA = inputs["netcdf_source1"]
+		sourceB = inputs["netcdf_source2"]
+		freq    = inputs["frequency"]
+		ratio   = inputs["ratio"]
+		ave     = inputs["average"]
+		var     = inputs["var"]
+		target 	= inputs["netcdf_target"]
 
 		fortran = 'correlatefield'
 		
