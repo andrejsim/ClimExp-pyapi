@@ -97,7 +97,8 @@ def testJSONs():
 # author: Alessandro Spin
 
 # CLIPC D4P dev repository
-REPOS_URL='http://verce-portal-dev.scai.fraunhofer.de/j2ep-1.0/prov/workflow/insert'
+#REPOS_URL='http://verce-portal-dev.scai.fraunhofer.de/j2ep-1.0/prov/workflow/insert'
+REPOS_URL='http://localhost:8082/workflow/insert'
 
 import ast
 
