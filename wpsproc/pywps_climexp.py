@@ -2,7 +2,7 @@ import pywps
 from pywps.Process import WPSProcess
 import os
 from datetime import datetime
-import provenance
+from wpsproc import provenance
 # import sys, traceback #traceback.print_exc(file=sys.stdout)
 import netCDF4
 import json
@@ -107,7 +107,6 @@ wpsin = {
 class KnmiClimateExplorerWpsProcess(WPSProcess):
 
     def __init__(self):
-
         # self.fileOutPath1 = None
         # self.fileOutURL = ""
         self.bundle = None # used to add provs...
@@ -135,10 +134,9 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
                             grassLocation   = wps["grassLocation"]
                             )
         
-        self.inputs = wpsin["inputs"]
 
         # for inputDict in descriptor.inputsTuple:
-        for inputDict in self.inputs.values():
+        for inputDict in wpsin["inputs"].values():
             try:
                 self.inputs[inputDict["identifier"]] = self.addLiteralInput(  identifier = inputDict["identifier"] ,
                                                                               title      = inputDict["title"],
@@ -168,9 +166,7 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
                 #print "no values"
                 pass
 
-        self.outputs = wpsin["outputs"]
-
-        for output in self.outputs.values():         
+        for output in wpsin["outputs"].values():         
             self.outputs[output["identifier"]] = self.addLiteralOutput(  identifier = output["identifier"] ,
                                                                               title      = output["title"],
                                                                               type       = output["type"],
@@ -311,7 +307,6 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
 
         ''' output to local json '''
         provfile = '/tmp/prov.json'
-
         prov.writeMetadata(provfile)
         # self.callback("metadata inserted.", 100)
 
