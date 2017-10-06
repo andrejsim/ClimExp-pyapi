@@ -2,7 +2,7 @@ import pywps
 from pywps.Process import WPSProcess
 import os
 from datetime import datetime
-import provenance
+from wpsproc import provenance
 # import sys, traceback #traceback.print_exc(file=sys.stdout)
 import netCDF4
 import json
@@ -20,7 +20,76 @@ from climexp import climexp_pyapi
 # generic KNMI process
 class KnmiClimateExplorerWpsProcess(WPSProcess):
 
-    def __init__(self,wpsin):
+    def __init__(self):
+        wpsin = {
+          "wps" : { "identifier"  : "climexp" ,
+            "title"       : "Climate Exmplorer KNMI",
+            "abstract"    : "KNMI Diagnostic Tool Climate Explorer",
+            "version"     : "1.0.0",
+            "storeSupported" : True,
+            "statusSupported": True,   
+            "grassLocation"  : False
+          } ,  
+          "inputs" : {  "netcdf_source1": {
+                  "default": "~/climexp/DATA/cru_ts3.22.1901.2013.pre.dat.nc", 
+                  "abstract": "application/netcdf", 
+                  "identifier": "netcdf_source1", 
+                  "values": None, 
+                  "type" : "String",
+                  "title": "Copy input: Input 1 netCDF opendap."
+                }, 
+                "netcdf_source2": {
+                  "default": "~/climexp/DATA/nino3.nc", 
+                  "abstract": "application/netcdf", 
+                  "identifier": "netcdf_source2", 
+                  "values": None, 
+                  "type" : "String",
+                  "title": "Copy input: Input 2 netCDF opendap."
+                }, 
+                "ratio": {
+                  "default": "1:12", 
+                  "identifier": "ratio", 
+                  "values": None, 
+                  "type" : "String",
+                  "title": "Ratio"
+                }, 
+                "netcdf_target": {
+                  "default": "out.nc", 
+                  "identifier": "netcdf_target", 
+                  "values": None, 
+                  "type" : "String",
+                  "title": "Output netCDF."
+                }, 
+                "average": {
+                  "default": "ave", 
+                  "identifier": "average", 
+                  "values": None, 
+                  "type" : "String",
+                  "title": "Average"
+                }, 
+                "tags": {
+                  "default": "c3s-422-Lot2", 
+                  "identifier": "tags", 
+                  "values": None, 
+                  "type" : "String",
+                  "title": "User Defined Tags CLIPC user tags."
+                }, 
+                "frequency": {
+                  "default": "mon", 
+                  "identifier": "frequency", 
+                  "values": None, 
+                  "type" : "String",
+                  "title": "Frequency"
+                },
+                "var": {
+                  "default": "3", 
+                  "identifier": "var", 
+                  "values": None, 
+                  "type" : "String",
+                  "title": "var"
+                }
+              }
+        }
 
         # self.fileOutPath1 = None
         # self.fileOutURL = ""
@@ -218,7 +287,7 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         # self.opendapURL.setValue(outputurl)
 
         ''' output to local json '''
-        prov.writeMetadata('bundle.json')
+        # prov.writeMetadata('bundle.json') <------ This saves local provenance both to file DB
         # self.callback("metadata inserted.", 100)
 
 

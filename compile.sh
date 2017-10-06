@@ -20,3 +20,9 @@ cp Makefile.docker ${FORTRAN}/${PVM_ARCH}/Makefile
 cd ${FORTRAN}/${PVM_ARCH}
 
 make
+
+
+export CLIMEXPFORTRAN=/nobackup/users/plieger/code/github/maartenplieger/Fortran/build/
+
+
+/nobackup/users/plieger/code/github/maartenplieger/dsp-controller-home
