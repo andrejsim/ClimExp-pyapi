@@ -84,6 +84,24 @@ wpsin = {
                           "title": "var"
                         }
                       }
+          "outputs" : { 
+                        "data": {
+                          "default": "out.nc", 
+                          "abstract": "application/netcdf", 
+                          "identifier": "data", 
+                          "values": None, 
+                          "type" : "String",
+                          "title": "Output of correlatefield"
+                        },
+                        "data": {
+                          "default": "out.nc", 
+                          "abstract": "application/netcdf", 
+                          "identifier": "data", 
+                          "values": None, 
+                          "type" : "String",
+                          "title": "Output of correlatefield"
+                        }
+                      }
         }
 
 
@@ -152,6 +170,14 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
                 #print "no values"
                 pass
 
+        self.outputs = wpsin["outputs"]
+        for inputDict in self.inputs.values():
+          
+            self.inputs[inputDict["identifier"]] = self.addLiteralInput(  identifier = inputDict["identifier"] ,
+                                                                              title      = inputDict["title"],
+                                                                              type       = inputDict["type"],
+                                                                              default    = inputDict["default"], 
+                                                                              abstract   = inputDict["abstract"]
 
         # self.processExecuteCallback = descriptor.processExecuteCallback
 

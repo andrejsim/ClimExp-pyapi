@@ -27,6 +27,9 @@ from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 #from prov.serializers import provjson
 # 
 
+
+REPOS_URL='http://localhost:8083/workflow/insert'
+
 # read json examples from alessandro.
 
 #
@@ -98,7 +101,6 @@ def testJSONs():
 
 # CLIPC D4P dev repository
 #REPOS_URL='http://verce-portal-dev.scai.fraunhofer.de/j2ep-1.0/prov/workflow/insert'
-REPOS_URL='http://localhost:8082/workflow/insert'
 
 import ast
 
