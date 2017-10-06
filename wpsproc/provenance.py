@@ -27,6 +27,9 @@ from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 #from prov.serializers import provjson
 # 
 
+
+REPOS_URL='http://localhost:8083/workflow/insert'
+
 # read json examples from alessandro.
 
 #
@@ -97,7 +100,7 @@ def testJSONs():
 # author: Alessandro Spin
 
 # CLIPC D4P dev repository
-REPOS_URL='http://verce-portal-dev.scai.fraunhofer.de/j2ep-1.0/prov/workflow/insert'
+#REPOS_URL='http://verce-portal-dev.scai.fraunhofer.de/j2ep-1.0/prov/workflow/insert'
 
 import ast
 
@@ -562,11 +565,20 @@ class MetadataD4P(object):
         self.lineage['errors'] = error
 
     def writeMetadata(self,file_directory):
+
         writeJSON(file_directory,self.bundle)
+        
         writeJSON(file_directory,self.lineage)
 
-        writePOST(self.bundle)
-        writePOST(self.lineage)
+        try:
+            writePOST(self.bundle)
+        except Exception, e:
+            print e
+        
+        try:
+            writePOST(self.lineage)
+        except Exception, e:
+            print e
 
 
 

@@ -16,81 +16,97 @@ from climexp import climexp_pyapi
     PyWPS API for Climate Exmplorer Diagnostic tool
 '''    
 
+wpsin = { 
+          "wps" : { "identifier"  : "climexp" ,
+                    "title"       : "Climate Exmplorer KNMI",
+                    "abstract"    : "KNMI Diagnostic Tool Climate Explorer",
+                    "version"     : "1.0.0",
+                    "storeSupported" : True,
+                    "statusSupported": True,   
+                    "grassLocation"  : False
+                  } ,  
+          "inputs" : {  "netcdf_source1": {
+                          "default": "~/climexp/DATA/cru_ts3.22.1901.2013.pre.dat.nc", 
+                          "abstract": "application/netcdf", 
+                          "identifier": "netcdf_source1", 
+                          "values": None, 
+                          "type" : "String",
+                          "title": "Copy input: Input 1 netCDF opendap."
+                        }, 
+                        "netcdf_source2": {
+                          "default": "~/climexp/DATA/nino3.nc", 
+                          "abstract": "application/netcdf", 
+                          "identifier": "netcdf_source2", 
+                          "values": None, 
+                          "type" : "String",
+                          "title": "Copy input: Input 2 netCDF opendap."
+                        }, 
+                        "ratio": {
+                          "default": "1:12", 
+                          "identifier": "ratio", 
+                          "values": None, 
+                          "type" : "String",
+                          "title": "Ratio"
+                        }, 
+                        "netcdf_target": {
+                          "default": "out.nc", 
+                          "identifier": "netcdf_target", 
+                          "values": None, 
+                          "type" : "String",
+                          "title": "Output netCDF."
+                        }, 
+                        "average": {
+                          "default": "ave", 
+                          "identifier": "average", 
+                          "values": None, 
+                          "type" : "String",
+                          "title": "Average"
+                        }, 
+                        "tags": {
+                          "default": "c3s-422-Lot2", 
+                          "identifier": "tags", 
+                          "values": None, 
+                          "type" : "String",
+                          "title": "User Defined Tags CLIPC user tags."
+                        }, 
+                        "frequency": {
+                          "default": "mon", 
+                          "identifier": "frequency", 
+                          "values": None, 
+                          "type" : "String",
+                          "title": "Frequency"
+                        },
+                        "var": {
+                          "default": "3", 
+                          "identifier": "var", 
+                          "values": None, 
+                          "type" : "String",
+                          "title": "var"
+                        }
+                      },
+          "outputs" : { 
+                        "data": {
+                          "abstract": "application/netcdf", 
+                          "identifier": "data", 
+                          "values": None, 
+                          "type" : "String",
+                          "title": "Output of correlatefield"
+                        },
+                        "provenance": {
+                          "abstract": "application/json", 
+                          "identifier": "data", 
+                          "values": None, 
+                          "type" : "String",
+                          "title": "Provenance of correlatefield"
+                        }
+                      }
+        }
+
 
 # generic KNMI process
 class KnmiClimateExplorerWpsProcess(WPSProcess):
 
     def __init__(self):
-        wpsin = {
-          "wps" : { "identifier"  : "climexp" ,
-            "title"       : "Climate Exmplorer KNMI",
-            "abstract"    : "KNMI Diagnostic Tool Climate Explorer",
-            "version"     : "1.0.0",
-            "storeSupported" : True,
-            "statusSupported": True,   
-            "grassLocation"  : False
-          } ,  
-          "inputs" : {  "netcdf_source1": {
-                  "default": "~/climexp/DATA/cru_ts3.22.1901.2013.pre.dat.nc", 
-                  "abstract": "application/netcdf", 
-                  "identifier": "netcdf_source1", 
-                  "values": None, 
-                  "type" : "String",
-                  "title": "Copy input: Input 1 netCDF opendap."
-                }, 
-                "netcdf_source2": {
-                  "default": "~/climexp/DATA/nino3.nc", 
-                  "abstract": "application/netcdf", 
-                  "identifier": "netcdf_source2", 
-                  "values": None, 
-                  "type" : "String",
-                  "title": "Copy input: Input 2 netCDF opendap."
-                }, 
-                "ratio": {
-                  "default": "1:12", 
-                  "identifier": "ratio", 
-                  "values": None, 
-                  "type" : "String",
-                  "title": "Ratio"
-                }, 
-                "netcdf_target": {
-                  "default": "out.nc", 
-                  "identifier": "netcdf_target", 
-                  "values": None, 
-                  "type" : "String",
-                  "title": "Output netCDF."
-                }, 
-                "average": {
-                  "default": "ave", 
-                  "identifier": "average", 
-                  "values": None, 
-                  "type" : "String",
-                  "title": "Average"
-                }, 
-                "tags": {
-                  "default": "c3s-422-Lot2", 
-                  "identifier": "tags", 
-                  "values": None, 
-                  "type" : "String",
-                  "title": "User Defined Tags CLIPC user tags."
-                }, 
-                "frequency": {
-                  "default": "mon", 
-                  "identifier": "frequency", 
-                  "values": None, 
-                  "type" : "String",
-                  "title": "Frequency"
-                },
-                "var": {
-                  "default": "3", 
-                  "identifier": "var", 
-                  "values": None, 
-                  "type" : "String",
-                  "title": "var"
-                }
-              }
-        }
-
         # self.fileOutPath1 = None
         # self.fileOutURL = ""
         self.bundle = None # used to add provs...
@@ -118,10 +134,9 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
                             grassLocation   = wps["grassLocation"]
                             )
         
-        self.inputs = wpsin["inputs"]
 
         # for inputDict in descriptor.inputsTuple:
-        for inputDict in self.inputs.values():
+        for inputDict in wpsin["inputs"].values():
             try:
                 self.inputs[inputDict["identifier"]] = self.addLiteralInput(  identifier = inputDict["identifier"] ,
                                                                               title      = inputDict["title"],
@@ -151,6 +166,12 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
                 #print "no values"
                 pass
 
+        for output in wpsin["outputs"].values():         
+            self.outputs[output["identifier"]] = self.addLiteralOutput(  identifier = output["identifier"] ,
+                                                                              title      = output["title"],
+                                                                              type       = output["type"],
+                                                                              abstract   = output["abstract"]
+                                                                              )
 
         # self.processExecuteCallback = descriptor.processExecuteCallback
 
@@ -240,11 +261,9 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
 
         climexp_pyapi.correlatefield(self.inputs)
 
+        outfilename = str(self.inputs['netcdf_target'].getValue())
+        size = os.path.getsize(outfilename)
 
-        # self.netcdf_w = fileO
-
-        size = 666
-        
         # if fileO is not None:
             # self.callback("Finished wps."+str(fileO), 70)
             # try:
@@ -287,10 +306,12 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         # self.opendapURL.setValue(outputurl)
 
         ''' output to local json '''
-        # prov.writeMetadata('bundle.json') <------ This saves local provenance both to file DB
+        provfile = '/tmp/prov.json'
+        prov.writeMetadata(provfile)
         # self.callback("metadata inserted.", 100)
 
-
+        #self.outputs['data'].setValue(provfile)
+        #self.outputs['provenance'].setValue(provfile)
         #
         # issues with prov library here, need to ironout...
         #xml = provexport.toW3Cprov( [prov.lineage] , [prov.bundle])
