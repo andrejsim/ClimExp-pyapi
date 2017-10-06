@@ -565,11 +565,20 @@ class MetadataD4P(object):
         self.lineage['errors'] = error
 
     def writeMetadata(self,file_directory):
+
         writeJSON(file_directory,self.bundle)
+        
         writeJSON(file_directory,self.lineage)
 
-        writePOST(self.bundle)
-        writePOST(self.lineage)
+        try:
+            writePOST(self.bundle)
+        except Exception, e:
+            print e
+        
+        try:
+            writePOST(self.lineage)
+        except Exception, e:
+            print e
 
 
 

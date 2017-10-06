@@ -83,23 +83,21 @@ wpsin = {
                           "type" : "String",
                           "title": "var"
                         }
-                      }
+                      },
           "outputs" : { 
                         "data": {
-                          "default": "out.nc", 
                           "abstract": "application/netcdf", 
                           "identifier": "data", 
                           "values": None, 
                           "type" : "String",
                           "title": "Output of correlatefield"
                         },
-                        "data": {
-                          "default": "out.nc", 
-                          "abstract": "application/netcdf", 
+                        "provenance": {
+                          "abstract": "application/json", 
                           "identifier": "data", 
                           "values": None, 
                           "type" : "String",
-                          "title": "Output of correlatefield"
+                          "title": "Provenance of correlatefield"
                         }
                       }
         }
@@ -171,13 +169,13 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
                 pass
 
         self.outputs = wpsin["outputs"]
-        for inputDict in self.inputs.values():
-          
-            self.inputs[inputDict["identifier"]] = self.addLiteralInput(  identifier = inputDict["identifier"] ,
-                                                                              title      = inputDict["title"],
-                                                                              type       = inputDict["type"],
-                                                                              default    = inputDict["default"], 
-                                                                              abstract   = inputDict["abstract"]
+
+        for output in self.outputs.values():         
+            self.outputs[output["identifier"]] = self.addLiteralOutput(  identifier = output["identifier"] ,
+                                                                              title      = output["title"],
+                                                                              type       = output["type"],
+                                                                              abstract   = output["abstract"]
+                                                                              )
 
         # self.processExecuteCallback = descriptor.processExecuteCallback
 
@@ -267,11 +265,9 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
 
         climexp_pyapi.correlatefield(self.inputs)
 
+        outfilename = str(self.inputs['netcdf_target'].getValue())
+        size = os.path.getsize(outfilename)
 
-        # self.netcdf_w = fileO
-
-        size = 666
-        
         # if fileO is not None:
             # self.callback("Finished wps."+str(fileO), 70)
             # try:
@@ -314,10 +310,13 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         # self.opendapURL.setValue(outputurl)
 
         ''' output to local json '''
-        prov.writeMetadata('/tmp/bundle.json')
+        provfile = '/tmp/prov.json'
+
+        prov.writeMetadata(provfile)
         # self.callback("metadata inserted.", 100)
 
-
+        self.outputs['data'].setValue(provfile)
+        self.outputs['provenance'].setValue(provfile)
         #
         # issues with prov library here, need to ironout...
         #xml = provexport.toW3Cprov( [prov.lineage] , [prov.bundle])
