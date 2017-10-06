@@ -315,8 +315,8 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         prov.writeMetadata(provfile)
         # self.callback("metadata inserted.", 100)
 
-        self.outputs['data'].setValue(provfile)
-        self.outputs['provenance'].setValue(provfile)
+        #self.outputs['data'].setValue(provfile)
+        #self.outputs['provenance'].setValue(provfile)
         #
         # issues with prov library here, need to ironout...
         #xml = provexport.toW3Cprov( [prov.lineage] , [prov.bundle])
