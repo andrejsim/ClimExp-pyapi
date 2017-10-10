@@ -28,7 +28,7 @@ from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 # 
 
 
-REPOS_URL='http://localhost:8083/workflow/insert'
+REPOS_URL='http://localhost:8082/workflow/insert'
 
 # read json examples from alessandro.
 
