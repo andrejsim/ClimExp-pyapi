@@ -99,7 +99,8 @@ wpsin = {
                           "type" : "String",
                           "title": "Provenance of correlatefield"
                         }
-                      }
+                      },
+          "prov-output-file" : '/tmp/provenance.json'            
         }
 
 
@@ -306,7 +307,8 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         # self.opendapURL.setValue(outputurl)
 
         ''' output to local json '''
-        provfile = '/tmp/prov.json'
+        provfile = wpsin['prov-output-file']
+
         prov.writeMetadata(provfile)
         # self.callback("metadata inserted.", 100)
 
