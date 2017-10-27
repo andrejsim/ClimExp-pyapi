@@ -100,7 +100,7 @@ wpsin = {
                           "title": "Provenance of correlatefield"
                         }
                       },
-          "prov-output-file" : '/tmp/provenance.json'            
+          "prov-output-file" : '/tmp/c3s-provenance.json'            
         }
 
 
@@ -232,7 +232,7 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         # username = homedir.split("/")[-2]
 
         # use prov call back later... each start creates lineage info
-        prov = provenance.MetadataD4P(  name=self.identifier , 
+        prov = provenance.Wps_Prov(  name=self.identifier , 
                                         description=self.abstract ,
                                         username="c3s_user" ,
                                         inputs=self.inputs ,
@@ -263,6 +263,7 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         climexp_pyapi.correlatefield(self.inputs)
 
         outfilename = str(self.inputs['netcdf_target'].getValue())
+
         size = os.path.getsize(outfilename)
 
         # if fileO is not None:
@@ -298,7 +299,7 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
      
 
         ''' adds knmi_prov '''
-        prov.finish( 'source' , 'outputurl' ,size)  
+        prov.finish( None , [ outfilename ] ,size)  
 
         ''' finalise prov and write to netcdf '''
         prov.closeProv()
@@ -309,7 +310,7 @@ class KnmiClimateExplorerWpsProcess(WPSProcess):
         ''' output to local json '''
         provfile = wpsin['prov-output-file']
 
-        prov.writeMetadata(provfile)
+        prov.write(provfile)
         # self.callback("metadata inserted.", 100)
 
         #self.outputs['data'].setValue(provfile)

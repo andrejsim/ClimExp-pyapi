@@ -1,7 +1,7 @@
 # 
 # Institute: KNMI
 # Project: C3S 34a Lot2
-# Module:  Provenance
+# Module:  Provenance, this is a pre, s-prov implementation of PROV-D
 # Authors: Andrej M, Alessandro S.
 #
 
@@ -17,7 +17,7 @@ import urllib
 from urlparse import urlparse
 import csv
 import StringIO
-import sys, traceback #traceback.print_exc(file=sys.stdout)
+# import sys, traceback #traceback.print_exc(file=sys.stdout)
 
 from xml.sax.saxutils import escape
 
@@ -28,8 +28,9 @@ from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 # 
 
 
+#REPOS_URL='http://localhost:8082/workflow/insert'
 REPOS_URL='http://localhost:8082/workflow/insert'
-
+REPOS_URL='http://ec2-34-250-52-64.eu-west-1.compute.amazonaws.com:8082/workflow/insert'
 # read json examples from alessandro.
 
 #
@@ -349,10 +350,12 @@ def toW3Cprov(ling,bundl,format='w3c-prov-xml'):
         else:
             return g.serialize(format='xml')
 
-# Metadata bridge to D4P
-# 
+'''
+    Provenance Object for WPS
+    Generates lineage and bundle information from hooks in a pywps process.
+''' 
 
-class MetadataD4P(object):
+class Wps_Prov(object):
 
     # {u'_id': u'RDWD_orfeus-as-85724-d140e70c-0222-11e6-92ad-f45c89acf865',
     #  u'description': u'',
@@ -449,6 +452,7 @@ class MetadataD4P(object):
     #   self.bundle['workflowName'] = "" #'test_rdwd'}
 
     def createLineage(self , runId , name ,inputs ):
+
         # {u'_id': u'PE_square_write_orfeus-as-85724-d27f8c4a-0222-11e6-8f71-f45c89acf865',
         #  u'actedOnBehalfOf': u'PE_square_8',
         #  u'annotations': {},
@@ -525,6 +529,7 @@ class MetadataD4P(object):
         #bundle update
         #list(self.bundle['input']).append(data_input)
 
+        '''    
         try:
             nclinkOfSource = [ self.output.getncattr('uuid') ]
             try:
@@ -540,6 +545,7 @@ class MetadataD4P(object):
         for did in nclinkOfSource:
             self.lineage['derivationIds'] .append( { "DerivedFromDatasetID"         : str(did) , 
                                                      "TriggeredByProcessIterationID": None } )
+        '''
         
 
         json_content = {}
@@ -564,7 +570,7 @@ class MetadataD4P(object):
     def errors(self, error):
         self.lineage['errors'] = error
 
-    def writeMetadata(self,file_directory):
+    def write(self,file_directory):
 
         writeJSON(file_directory,self.bundle)
         
