@@ -25,9 +25,10 @@ from wpsproc import *
 from wpsproc import prov 
 from wpsproc.prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 
-#REPOS_URL='http://localhost:8082/workflow/insert'
+
 REPOS_URL='http://localhost:8082/workflow/insert'
-REPOS_URL='http://ec2-34-250-52-64.eu-west-1.compute.amazonaws.com:8082/workflow/insert'
+REPOS_URL='http://pc150396:8082/workflow/insert'
+#REPOS_URL='http://ec2-34-250-52-64.eu-west-1.compute.amazonaws.com:8082/workflow/insert'
 # read json examples from alessandro.
 
 #
