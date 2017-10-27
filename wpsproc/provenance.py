@@ -21,12 +21,9 @@ import StringIO
 
 from xml.sax.saxutils import escape
 
-################
-# import knmi_wps_processes.prov as prov
-from prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
-#from prov.serializers import provjson
-# 
-
+from wpsproc import *
+from wpsproc import prov 
+from wpsproc.prov.model import ProvDocument, Namespace, Literal, PROV, Identifier
 
 #REPOS_URL='http://localhost:8082/workflow/insert'
 REPOS_URL='http://localhost:8082/workflow/insert'

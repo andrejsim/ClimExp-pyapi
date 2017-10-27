@@ -8,7 +8,7 @@ __all__ = [
     'get'
 ]
 
-from prov import Error
+from .. import Error
 
 class Serializer(object):
     def __init__(self, document=None):

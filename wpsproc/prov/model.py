@@ -40,9 +40,15 @@ from six.moves.urllib.parse import urlparse
 #from pywps.prov.identifier import Identifier, QualifiedName
 #from pywps.prov.constants import *
 
-from prov import Error, serializers
-from prov.identifier import Identifier, QualifiedName
-from prov.constants import *
+#from prov import Error, serializers
+from . import Error, serializers
+
+from .identifier import Identifier, QualifiedName
+from .constants import *
+
+
+#from prov.identifier import Identifier, QualifiedName
+#from prov.constants import *
 
 # Data Types
 def _ensure_datetime(value):
