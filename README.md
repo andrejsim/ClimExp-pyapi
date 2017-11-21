@@ -3,7 +3,7 @@
 ### KNMI
 work integrated into C3S 34a Lot2 project
 
-binding python functions to fortran source code
+#### OGC WPS access to a Python API binding Climatge Explorer diagnostics implemented in Fortran source code
 
 ClimExp source code is available on ClimExp-fortran.git, original source at http://climexp.knmi.nl
 
